@@ -15,19 +15,19 @@ class ElementsScraper:
         starrings = [starrings.text for starrings in content.findAll('span', {'class': 'movie-starring'})]
         posters = [posters['src'] for posters in content.findAll('img', {'class': 'movie-poster'})]        
         for index in range(0, len(titles)):
-            item = {
-                'title': titles[index],
-                'genre': genres[index],
-                'country': countries[index],
-                'year': years[index],
-                'director': directors[index],
-                'starring': starrings[index],
-                'poster': posters[index]
-            }            
+            item ={
+                'title':titles[index],
+                'genre':genres[index],
+                'country':countries[index],
+                'year':years[index],
+                'director':directors[index],
+                'starring':starrings[index],
+                'poster':posters[index]
+                }            
             self.to_csv(item)
     
     def to_csv(self, item):
-        movie_exists = os.path.isfile('movies.csv')        
+        movie_exists =os.path.isfile('movies.csv')        
         with open('movies.csv', 'a') as csv_file:            
             writer = csv.DictWriter(csv_file, fieldnames=item.keys())
             if not movie_exists:
@@ -36,8 +36,8 @@ class ElementsScraper:
         
     def run(self):
         for page in range(1, 5):
-            next_page = self.base_url + str(page)
-            response = self.fetch(next_page)       
+            next_page =self.base_url + str(page)
+            response =self.fetch(next_page)       
             if response.status_code == 200:
                 self.parse(response.text)
             else:
